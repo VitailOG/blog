@@ -1,0 +1,163 @@
+{% extends 'news/news.html' %}
+{% load static %}
+{% load top_question %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'news/css/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'news/css/inc/header_footer.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="row-content">
+                <div class="question">
+                    <h2>{{ news.title }}</h2>
+                    <p class="date-publication">{{ news.date|date:"SHORT_DATE_FORMAT" }}</p>
+                    <p class="question-views">{{ news.view }} переглядів</p>
+                    {% if news.image %}
+                        <img src="{{ news.image.url }}" width="300px" style="margin: 0 auto; display: block"><br>
+                    {% endif %}
+                    <p class="text-question" id="comment-form">{{ news.text }}</p>
+                </div>
+
+                <div class="action">
+                    <a class="action-button" onmouseover="actionButton('block')">&hellip;</a>
+                    <div class="row-action" onmouseleave="closeAction('none')">
+                        <a href="{% url 'update_news' news.id %}" class="delete_edit_button">Редагувати</a>
+                        <form method="post" action="{% url 'delete' news.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Видалити" class="delete_edit_button">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <h3>Відповіді:</h3>
+
+                    <form action="{% url 'comment' news.id %}" method="post" id="comment-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent" id="parent-id" value="">
+                        <textarea name="text" id="text_comment"></textarea><br>
+                        <input type="submit" value="Залишити відповідь" class="answer">
+                    </form>
+
+                    <div class="answer-users">
+                        {% for i in news.get_not_parent_comment %}
+                            <div class="answer-none-parent">
+
+                                <div class="user-image">
+                                    {% if i.user.userimage_set.first.image.url %}
+                                        <img src="{{ i.user.userimage_set.first.image.url }}" class="user-img">
+                                    {% else %}
+                                        <img src="{% static 'news/image/user (1).png' %}" class="user-img">
+                                    {% endif %}
+                                </div>
+
+                                <p class="user-answer"><a href="{% url 'profile' i.user.id %}">{{ i.user.username }}</a>
+                                </p><br>
+                                <p class="other-date">{{ i.date_time|date:"Y/m/d H:i" }}
+                                    <a href="#comment-form" onclick="Comment('{{ i.user.username }}', {{ i.id }})">
+                                        Відповісти</a>
+                                </p>
+
+                                {% if i.text|length > 120 %}
+                                    <p class="text-comment" id="text-comment{{ i.id }}">{{ i.text|slice:"120" }}</p>
+                                    <a id="more-text{{ i.id }}" class="more-text"
+                                       onclick="moreText('text-comment{{ i.id }}',
+                                               'more-text{{ i.id }}',
+                                               '{{ i.text }}')">Більше
+                                    </a>
+                                {% else %}
+                                    <p class="text-comment" id="text-comment{{ i.id }}">{{ i.text }}</p>
+                                {% endif %}
+
+
+                                {% if request.user in i.like.all %}
+                                    <form action="{% url 'like' %}" method="post">
+                                        {% csrf_token %}
+                                        <button value="{{ i.id }}" name="id_comment">
+                                            <img src="{% static 'news/image/like--v2.png' %}" width="20px">
+                                        </button>
+                                        {{ i.get_count_like }}<br>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'like' %}" method="post">
+                                        {% csrf_token %}
+                                        <button value="{{ i.id }}" name="id_comment">
+                                            <img src="{% static 'news/image/like--v1.png' %}" width="20px">
+                                        </button>
+                                        {{ i.get_count_like }}<br>
+                                    </form>
+                                {% endif %}
+
+                            </div>
+
+                            {% for e in i.comment_set.all %}
+                                <div class="parent-answer">
+
+
+                                    <div class="user-image">
+                                        {% if e.user.userimage_set.first.image.url %}
+                                            <img src="{{ e.user.userimage_set.first.image.url }}" class="user-img">
+                                        {% else %}
+                                            <img src="{% static 'news/image/user (1).png' %}" class="user-img">
+                                        {% endif %}
+                                    </div>
+
+                                    <p class="user-answer"><a
+                                            href="{% url 'profile' e.user.id %}">{{ e.user.username }}</a></p><br>
+                                    <p class="other-date">{{ e.date_time|date:"Y/m/d H:i" }}
+                                        <a href="#comment-form" onclick="Comment('{{ e.user.username }}', {{ i.id }})">Відповісти</a>
+                                    </p>
+                                    {% if e.text|length > 120 %}
+                                        <p class="text-comment" id="text-comment{{ e.id }}">{{ e.text|slice:"120" }}</p>
+                                        <a id="more-text{{ e.id }}" class="more-text"
+                                           onclick="moreText('text-comment{{ e.id }}',
+                                                   'more-text{{ e.id }}',
+                                                   '{{ e.text }}')">Більше
+                                        </a>
+                                    {% else %}
+                                            <p class="text-comment" id="text-comment{{ e.id }}">{{ e.text }}</p>
+                                    {% endif %}
+
+                                    {% if request.user in e.like.all %}
+                                        <form action="{% url 'like' %}" method="post">
+                                            {% csrf_token %}
+                                            <button value="{{ e.id }}" name="id_comment">
+                                                <img src="{% static 'news/image/like--v2.png' %}" width="20px">
+                                            </button>
+                                            {{ e.get_count_like }}<br>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'like' %}" method="post">
+                                            {% csrf_token %}
+                                            <button value="{{ e.id }}" name="id_comment">
+                                                <img src="{% static 'news/image/like--v1.png' %}" width="20px">
+                                            </button>
+                                            {{ e.get_count_like }}<br>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                                <br>
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row-sidebar">
+                <h2 class="top-question">Популярні питання</h2>
+                {% get_top_question %}
+            </div>
+
+        </div>
+    </div>
+    <script src="{% static 'news/js/detail_news.js' %}"></script>
+{% endblock %}

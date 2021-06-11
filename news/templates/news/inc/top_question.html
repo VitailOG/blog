@@ -1,0 +1,11 @@
+{% load top_question %}
+
+{% for i in news %}
+    <div class="question-date">
+        <p class="title"><a href="{% url 'detail_news' i.id %}">{{ i.title }}</a></p>
+        <p class="view-data">
+            <span>{{ i.view }} переглядів</span>
+            <span>{{ i.date|date:"Y/d/h" }}</span>
+        </p>
+    </div>
+{% endfor %}

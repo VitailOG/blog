@@ -1,0 +1,154 @@
+/* CONTENT */
+
+.row{
+	margin: 15px auto;
+	padding: 0 10px 0 10px;
+	max-width: 1150px;
+}
+
+.row-content{
+	box-shadow: 0px 0px 2px 0.5px #5b5b5c;
+	border-radius: 2px;
+	padding: 15px;
+	border: 1px solid #5b5b5c;
+	margin: 0 auto;
+	/*width: 45%;*/
+	max-width: 510px;
+}
+
+.username{
+	font-size: 25px;
+	font-family: 'PT Sans Narrow', sans-serif;
+	color: #696969;
+	display: inline-block;
+	margin-top: 35px;
+	margin-left: 85px;
+}
+
+.all-articles-user{
+	font-family: 'Noto Sans HK', sans-serif;
+	display: inline-block;
+	margin-left: 180px;
+}
+
+.img-profile{
+	cursor: pointer;
+	width: 130px;
+	height: 130px;
+	border-radius: 50%;
+}
+
+/* SLIDER */
+
+.slider-img-user{
+	display: none;
+	position: absolute;
+	margin: 0 auto;
+	top: 90px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 456px;
+	padding: 0 15px 0 15px;
+	z-index: 150;
+}
+
+.grey-screen{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(1, 1, 1, 0.8);
+	z-index: 100;
+}
+
+.slider {
+    /*max-width: 456px;*/
+    width: 100%;
+    max-height: 456px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.slider-line {
+    width: 1024px;
+    height: 456px;
+    display: flex;
+    position: relative;
+    left: 0;
+    transition: all ease 1s;
+}
+
+
+button {
+    background: none;
+    border: 1px solid #00BFFF;
+    border-radius: 4px;
+	color: #00BFFF;
+    padding: 10px 20px;
+    font-size: .9rem;
+}
+
+button:hover {
+    background: #00BFFF;
+	color: white;
+}
+
+.button-slider{
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+}
+
+
+/*  MEDIA  */
+
+@media (max-width: 920px) {
+	.username{
+		margin-left: 50px;
+	}
+	.img-profile{
+		width: 120px;
+		height: 120px;
+	}
+	.all-articles-user{
+		margin-left: 166px;
+	}
+}
+
+@media (max-width: 440px) {
+	.username{
+		font-size: 26px;
+		margin-left: 50px;
+	}
+	.img-profile{
+		width: 115px;
+		height: 115px;
+	}
+	.all-articles-user{
+		margin-left: 130px;
+		display: block;
+	}
+	.link-img{
+		display: block;
+	}
+}
+
+@media (max-width: 370px) {
+	.all-articles-user {
+		padding: 10px 0 15px 0;
+		margin-left: 18.6246%;
+	}
+	.username{
+		margin-left: 35.8166%;
+	}
+	.img-profile{
+		margin: 0 auto;
+		display: block;
+	}
+	.link-img{
+		margin-left: 28.6532%;
+	}
+}

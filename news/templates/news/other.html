@@ -1,0 +1,36 @@
+{% extends 'news/news.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <div class="content-title"><h1>Статті користувача {{ username.username }}</h1></div>
+    <div class="content-row">
+        <div class="row">
+            {% for i in user %}
+                <div class="post">
+                    <div class="post-content">
+
+                        <div class="img-user">
+                            {% if i.author.userimage_set.first.image.url %}
+                                <img src="{{ i.author.userimage_set.first.image.url }}" class="img-profile">
+                            {% else %}
+                                <img src="{% static 'news/image/user (1).png' %}" class="img-profile">
+                            {% endif %}
+                        </div>
+
+                        <div class="user-post">
+                            <h2 class="post-title"><a href="{% url 'detail_news' i.id %}">{{ i.title }}</a></h2>
+                            <p class="anons-post">{{ i.text|truncatechars:80 }}</p>
+                            <p class="post-data-view">
+                                <span class="span-date">{{ i.date|date:"Y/m/d H:i" }}</span><br>
+                                <span class="span-view">{{ i.view }} переглядів</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

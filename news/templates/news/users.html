@@ -1,0 +1,32 @@
+{% extends 'news/news.html' %}
+{% load static %}
+
+{% block title %}which text{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'news/css/users.css' %}">
+    <link rel="stylesheet" href="{% static 'news/css/inc/header_footer.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="row">
+            <div class="row-content">
+                {% for i in user %}
+                    <a href="{% url 'profile' i.id %}">
+                        <div class="users">
+                            {% if i.userimage_set.first.image.url %}
+                                <img src="{{ i.userimage_set.first.image.url }}">
+                            {% else %}
+                                <img src="{% static 'news/image/user (1).png' %}">
+                            {% endif %}
+                            <p class="users-name">Імя: {{ i.username }}</p>
+                            <p class="users-comment">Кількість коментарів:<br> {{ i.comment_set.count }}</p>
+                            <p class="users-article">Кількість статтей: {{ i.author.count }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

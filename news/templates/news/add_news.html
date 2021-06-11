@@ -1,0 +1,27 @@
+{% extends 'news/news.html' %}
+{% load static %}
+
+{% block title %}which text{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'news/css/add_news.css' %}">
+    <link rel="stylesheet" href="{% static 'news/css/inc/header_footer.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="form-addNews">
+            <h2>Добавлення статті</h2>
+            <form action="{% url 'add_news' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="id_title">Назва статті</label>
+                {{ form.title }}<br>
+                <label for="id_image">Картинка(не обов'язково)</label><br>
+                {{ form.image }}<br>
+                <label for="id_text">Опис статті</label>
+                {{ form.text }}<br>
+                <input type="submit" class="submit-button" value="Опублікувати"><br>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,121 @@
+/* CONTENT */
+
+
+.form-addNews{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    padding: 0 10px 0 10px;
+}
+
+.form-addNews h2{
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 60px;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px -5px #38565c;
+	color: #77b9c4;
+}
+
+.form-addNews label{
+    font-size: 20px;
+    color: 	#808080;
+    display: inline-block;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-family: 'Noto Sans HK', sans-serif;
+}
+
+.submit-button{
+	font-family: 'Open Sans', sans-serif;
+    color: #DCDCDC;
+    margin-left: 35%;
+    padding: 10px 25px;
+    background: #00CED1;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.submit-button:hover{
+    background: #20B2AA;
+    transition: background .5s ease;
+}
+
+.submit-button:not(hover){
+    background: #00CED1;
+    transition: background .3s ease;
+}
+
+#id_title{
+    color: #5b5b5c;
+    padding: 3px 5px;
+    font-family: 'Libre Franklin', sans-serif;
+    background: none;
+    height: 25%;
+    border-radius: 3px;
+    width: 100%;
+    resize: none;
+    border: 2px solid #00BFFF;
+}
+
+#id_title:focus{
+    box-shadow: 1px 1px 15px 1px #00BFFF;
+    transition: box-shadow .3s ease;
+}
+
+#id_text{
+    background: none;
+    height: 25%;
+    padding: 2px 5px;
+    font-family: 'Libre Franklin', sans-serif;
+    border-radius: 3px;
+    color: #5b5b5c;
+    width: 100%;
+    resize: none;
+    border: 2px solid #00BFFF;
+    margin-bottom: 10px;
+}
+
+#id_text:focus{
+    box-shadow: 1px 1px 15px 1px #00BFFF;
+    transition: box-shadow .3s ease;
+}
+
+#id_text:not(focus){
+    box-shadow: 0 0 0 0 #00BFFF;
+    transition: box-shadow .3s ease;
+}
+
+@media (max-width: 392px) {
+    .submit-button{
+        margin-left: 101px;
+    }
+}
+
+@media (max-width: 350px) {
+    .submit-button{
+        margin-left: 92px;
+    }
+}
+
+@media (max-width: 330px) {
+    .submit-button{
+        margin-left: 72px;
+    }
+}
+
+@media (max-width: 300px) {
+    .submit-button{
+        margin-left: 60px;
+    }
+}
+
+@media (max-width: 275px) {
+    .submit-button{
+        margin-left: 45px;
+    }
+    .form-addNews h2{
+        font-size: 50px;
+    }
+}

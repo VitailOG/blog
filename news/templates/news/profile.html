@@ -1,0 +1,78 @@
+{% extends 'news/news.html' %}
+{% load static %}
+
+{% block title %}which text{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'news/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'news/css/inc/header_footer.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+    <div class="grey-screen"></div>
+        <div class="row">
+            <div class="row-content">
+
+                {% if profile.userimage_set.first.image.url %}
+                    <img src="{{ profile.userimage_set.first.image.url }}" onclick="showImage('block')" class="img-profile">
+                {% else %}
+                    <img src="{% static 'news/image/user (1).png' %}" class="img-profile">
+                {% endif %}
+
+                <a href="#" class="username">{{ profile.username }}</a><br>
+                <a href="{% url 'art' profile.id %}" class="all-articles-user">Всі статті
+                    користувача {{ profile.username }}</a>
+
+
+                {% if profile.username == request.user.username %}
+                    <a href="{% url 'image_user' %}" class="link-img" style="margin-top: 3px; display: inline-block;">Змінити
+                        фотографію</a>
+                {% endif %}
+            </div>
+
+            <div class="slider-img-user">
+                <div class="slider">
+                    <div class="slider-line">
+                        {% for i in profile.userimage_set.all %}
+                                <img src="{{ i.image.url }}" class="image-scroll" width="456px">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="button-slider">
+                    <button class="slider-prev">&#60;</button>
+                    <button class="slider-next">&#62;</button>
+                    <button class="slider-next" onclick="showImage('none')">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let offset = 0;
+        let countImage = {{ profile.userimage_set.count }};
+
+        const sliderLine = document.querySelector('.slider-line');
+        document.querySelector('.slider-next').addEventListener('click', function(){
+            offset = offset + 456;
+            if (offset > (countImage * 456) - 456) {
+                offset = 0;
+            }
+            sliderLine.style.left = -offset + 'px';
+        });
+
+        document.querySelector('.slider-prev').addEventListener('click', function () {
+            offset = offset - 456;
+            if (offset < 0) {
+                offset = 0;
+            }
+            sliderLine.style.left = -offset + 'px';
+        });
+
+        function showImage(a) {
+            let elem = document.getElementsByClassName("slider-img-user");
+            for(var i=0; i<elem.length; i++)elem[i].style.display = a;
+            let grey = document.getElementsByClassName("grey-screen");
+            for(var i=0; i<grey.length; i++)grey[i].style.display = a;
+        }
+    </script>
+{% endblock %}
